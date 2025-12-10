@@ -32,13 +32,22 @@
         .card-body {
             padding: 1.5rem;
             color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 180px; /* tune this for your layout */
         }
+
 
         .btn {
             font-weight: bold;
-            box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
             border-radius: 50px;
+            box-shadow: 2px 2px 8px rgba(0,0,0,0.3);
             color: white;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px 20px;
         }
 
         .container {
@@ -56,7 +65,7 @@
     <h2 class="text-center mb-4">Apps</h2>
     <div class="row justify-content-center" id="apps-container"></div>
 
-    <br><br><br>
+    <div class="my-5"></div>
 
     <!-- Websites Section -->
     <h2 class="text-center mb-4">Websites</h2>
@@ -91,7 +100,7 @@
       },
       { // App No.2
         name: "Barcode Generator",
-        desc: "<br>Generate and scan the barcodes.<br>",
+        desc: "Generate and scan the barcodes.",
         bg: "#E74C3C",
         btn: "#C0392B",
         btn_txt: "PlayStore link",
@@ -99,7 +108,7 @@
       },
       { // App No.3
         name: "Traffic Counter",
-        desc: "<br>Count, report and survey.<br>",
+        desc: "Count, report and survey.",
         bg: "#4CAF50",
         btn: "#C0392B",
         btn_txt: "PlayStore link",
@@ -107,7 +116,7 @@
       },
       { // App No.4
         name: "VX Player",
-        desc: "<br>Watch videos from storage and online.<br>",
+        desc: "Watch videos from storage and online.",
         bg: "#F39C12",
         btn: "#FF5722",
         btn_txt: "PlayStore link",
@@ -123,7 +132,7 @@
       },
       { // App No.6
         name: "Server App",
-        desc: "Launch and test HTML websites over Wi-Fi for learning and testing purposes.",
+        desc: "Launch and test HTML websites over Wi-Fi for learning and testing.",
         bg: "#1ABC9C",
         btn: "#16A085",
         btn_txt: "PlayStore link",
@@ -131,7 +140,7 @@
       },
       { // App No.7
         name: "Video Factory",
-        desc: "Convert videos, download streams, and more with Video Factory.",
+        desc: "Convert videos, download streams, and more.",
         bg: "#4CAF50",
         btn: "#C0392B",
         btn_txt: "PlayStore link",
@@ -139,7 +148,7 @@
       },
       { // App No.8
         name: "Viber",
-        desc: "Keep your PC awake or use as a phone massager with customizable vibrations.",
+        desc: "Keep your PC awake or use as a vibration tool.",
         bg: "#2ECC71",
         btn: "#16A085",
         btn_txt: "PlayStore link",
@@ -147,7 +156,7 @@
       },
       { // App No.10
         name: "GeoSnap",
-        desc: "Capture photos with GPS location & timestamp. Save memories with places info.",
+        desc: "Capture photos with GPS location & timestamp.",
         bg: "#F39C12",
         btn: "#FF5722",
         btn_txt: "PlayStore link",
@@ -155,7 +164,7 @@
       },
       { // App No.11
         name: "Black Cat (Under testing)",
-        desc: "Lock photos, videos & files in PIN-protected folders. All stored locally.",
+        desc: "Lock photos, videos & files in PIN-protected folders.",
         bg: "#1ABC9C",
         btn: "#16A085",
         btn_txt: "PlayStore link",
@@ -163,7 +172,7 @@
       },
       { // App No.12
         name: "Bhagavad Gita (Under testing)",
-        desc: "Read, Listen & Learn the Bhagavad Gita with verse-wise translations.",
+        desc: "Read, Listen & Learn the Bhagavad Gita.",
         bg: "#4CAF50",
         btn: "#C0392B",
         btn_txt: "PlayStore link",
@@ -171,7 +180,7 @@
       },
       { // App No. undefined
         name: "ChatGPT",
-        desc: "Use ChatGPT on your mobile device for instant assistance.",
+        desc: "Use ChatGPT on your mobile device.",
         bg: "#34495E",
         btn: "#2C3E50",
         btn_txt: "Github link",
@@ -183,7 +192,7 @@
     const websites = [
       {
         name: "Trinetra",
-        desc: "Discover a collection of useful websites for various needs.",
+        desc: "Discover a collection of useful websites.",
         bg: "#3498DB",
         btn: "#1ABC9C",
         btn_txt: "open",
@@ -191,7 +200,7 @@
       },
       {
         name: "Text Encryption Tool",
-        desc: "A sleek, user-friendly text encryption and decryption tool.",
+        desc: "A modern encryption / decryption tool.",
         bg: "#34495E",
         btn: "#2C3E50",
         btn_txt: "open",
@@ -199,7 +208,7 @@
       },
       {
         name: "Moon Finder",
-        desc: "Find the moon’s direction relative to east at any time.",
+        desc: "Find the moon’s direction from your location.",
         bg: "#9B59B6",
         btn: "#8E44AD",
         btn_txt: "open",
@@ -207,7 +216,7 @@
       },
       {
         name: "Hello Stranger",
-        desc: "Chat with friends or strangers with no identity and zero data leakage.",
+        desc: "Anonymous chat with zero data storage.",
         bg: "#4CAF50",
         btn: "#FF5722",
         btn_txt: "open",
@@ -215,7 +224,7 @@
       }
     ];
 
-    /* ---------------- RENDER APPS ---------------- */
+    /* ---------------- RENDER FUNCTION ---------------- */
     function renderCards(list, containerId) {
       let container = document.getElementById(containerId);
       list.forEach(item => {
@@ -225,16 +234,16 @@
               <div class="card-body text-center">
                 <h5 class="card-title">${item.name}</h5>
                 <p class="card-text">${item.desc}</p>
-                <button class="btn" style="background-color:${item.btn}"
-                  onclick="window.open('${item.link}', '_blank')">
-                    ${item.btn_txt}
-                </button>
+                <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="btn" style="background-color:${item.btn}">
+                  ${item.btn_txt}
+                </a>
               </div>
             </div>
           </div>`;
       });
     }
 
+    /* ---------------- RUN ---------------- */
     renderCards(apps, "apps-container");
     renderCards(websites, "websites-container");
 </script>
