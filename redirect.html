@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script>
+        const id = new URLSearchParams(window.location.search).get("id");
+        if (id) {
+          window.location.replace("https://play.google.com/store/apps/details?id=" + id);
+        } else {
+          document.body.innerText = "Invalid link";
+        }
+    </script>
+</head>
+<body></body>
+</html>
