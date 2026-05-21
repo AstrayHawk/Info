@@ -3,309 +3,370 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Astray Hawk</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js"></script>
-
+    <title>Astray Hawk · Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Syne:wght@700;800&display=swap"
+          rel="stylesheet">
     <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+          --bg: #060610;
+          --surface: rgba(255,255,255,0.03);
+          --border: rgba(255,255,255,0.07);
+          --border-hover: rgba(255,255,255,0.14);
+          --text: #e0dcf8;
+          --muted: rgba(180,170,220,0.45);
+          --accent: #7c3aed;
+        }
+
+        html { scroll-behavior: smooth; }
+
         body {
-            background: linear-gradient(135deg, #CD00F8FF, #40C4FF, #001DF8FF);
-            min-height: 100vh;
-            color: #fff;
+          background: var(--bg);
+          color: var(--text);
+          font-family: 'Manrope', sans-serif;
+          min-height: 100vh;
+          overflow-x: hidden;
         }
 
-        h1, h2 {
-            color: #fff;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        /* ── BACKGROUND ── */
+        .bg-orbs {
+          position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden;
+        }
+        .bg-orbs span {
+          position: absolute; border-radius: 50%;
+          filter: blur(100px); opacity: 0.13;
+        }
+        .bg-orbs span:nth-child(1) { width: 700px; height: 700px; background: #4f0fbf; top: -250px; left: -200px; }
+        .bg-orbs span:nth-child(2) { width: 500px; height: 500px; background: #0891b2; bottom: -150px; right: -150px; }
+        .bg-orbs span:nth-child(3) { width: 350px; height: 350px; background: #be185d; top: 45%; left: 50%; transform: translate(-50%,-50%); }
+
+        /* ── LAYOUT ── */
+        .page { position: relative; z-index: 1; max-width: 1020px; margin: 0 auto; padding: 0 28px; }
+
+        /* ── HERO ── */
+        header {
+          position: relative; z-index: 1;
+          padding: 60px 28px 44px;
+          max-width: 1020px; margin: 0 auto;
+          display: flex; align-items: flex-end; justify-content: space-between; gap: 32px;
+          flex-wrap: wrap;
         }
 
+        .hero-label {
+          display: inline-flex; align-items: center; gap: 8px;
+          font-size: 11px; font-weight: 600; letter-spacing: 0.2em;
+          text-transform: uppercase; color: rgba(139,92,246,0.75);
+          margin-bottom: 16px;
+        }
+        .hero-label::before {
+          content: ''; display: block;
+          width: 24px; height: 1.5px;
+          background: linear-gradient(90deg,#7c3aed,transparent);
+        }
+
+        h1 {
+          font-family: 'Syne', sans-serif;
+          font-size: clamp(44px, 7.5vw, 80px);
+          font-weight: 800; line-height: 0.95;
+          letter-spacing: -0.025em; color: #fff;
+        }
+        h1 .outline {
+          -webkit-text-stroke: 1.5px rgba(255,255,255,0.2);
+          color: transparent;
+        }
+
+        .hero-sub {
+          margin-top: 16px; font-size: 14px; font-weight: 300;
+          color: var(--muted); line-height: 1.75; max-width: 320px;
+        }
+
+        .hero-stats { display: flex; gap: 32px; padding-bottom: 4px; flex-shrink: 0; }
+        .stat { text-align: right; }
+        .stat-n {
+          font-family: 'Syne', sans-serif;
+          font-size: 40px; font-weight: 800; color: #fff; line-height: 1;
+          letter-spacing: -0.02em;
+        }
+        .stat-l {
+          font-size: 10px; font-weight: 600; letter-spacing: 0.16em;
+          text-transform: uppercase; color: rgba(180,170,220,0.35); margin-top: 4px;
+        }
+
+        /* ── CONTROLS ── */
+        .controls {
+          position: relative; z-index: 1;
+          max-width: 1020px; margin: 0 auto;
+          padding: 0 28px 24px;
+          display: flex; align-items: center; justify-content: space-between; gap: 16px;
+          flex-wrap: wrap;
+          border-bottom: 1px solid var(--border);
+          padding-bottom: 20px;
+        }
+
+        .tabs { display: flex; gap: 6px; }
+        .tab {
+          background: none; border: 1px solid transparent;
+          font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 600;
+          color: rgba(180,170,220,0.4); border-radius: 8px;
+          padding: 8px 18px; cursor: pointer; transition: all 0.18s;
+          display: flex; align-items: center; gap: 7px;
+        }
+        .tab .cnt {
+          font-size: 10px; font-weight: 700;
+          background: rgba(255,255,255,0.07); border-radius: 100px;
+          padding: 2px 7px; color: rgba(180,170,220,0.5);
+          transition: all 0.18s;
+        }
+        .tab.active {
+          background: rgba(124,58,237,0.18);
+          border-color: rgba(124,58,237,0.35);
+          color: #c4b5fd;
+        }
+        .tab.active .cnt {
+          background: rgba(124,58,237,0.3); color: #ddd6fe;
+        }
+        .tab:hover:not(.active) {
+          color: rgba(180,170,220,0.75); background: rgba(255,255,255,0.04);
+        }
+
+        .search {
+          display: flex; align-items: center; gap: 9px;
+          background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+          border-radius: 8px; padding: 8px 14px; width: 220px;
+          transition: border-color 0.18s;
+        }
+        .search:focus-within { border-color: rgba(124,58,237,0.45); }
+        .search svg { width: 14px; height: 14px; flex-shrink: 0; color: rgba(180,170,220,0.3); }
+        .search input {
+          background: none; border: none; outline: none;
+          font-family: 'Manrope', sans-serif; font-size: 13px;
+          color: var(--text); width: 100%;
+        }
+        .search input::placeholder { color: rgba(180,170,220,0.3); }
+
+        /* ── GRID ── */
+        .grid-area { position: relative; z-index: 1; max-width: 1020px; margin: 0 auto; padding: 24px 28px 72px; }
+
+        .grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 12px;
+          align-items: start;
+        }
+
+        /* ── CARD ── */
         .card {
-            border: none;
-            border-radius: 15px;
-            transition: transform 0.3s;
+          background: var(--surface);
+          border: 1px solid var(--border);
+          border-radius: 14px;
+          padding: 20px;
+          display: flex; flex-direction: column; gap: 0;
+          transition: transform 0.22s ease, border-color 0.22s ease, background 0.22s ease;
+          text-decoration: none; color: inherit;
         }
-
         .card:hover {
-            transform: translateY(-10px);
+          transform: translateY(-4px);
+          border-color: var(--border-hover);
+          background: rgba(255,255,255,0.05);
         }
 
-        .card-body {
-            padding: 1.5rem;
-            color: #fff;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            height: 180px; /* tune this for your layout */
+        .card-top {
+          display: flex; align-items: flex-start; justify-content: space-between;
+          margin-bottom: 14px;
         }
 
-
-        .btn {
-            font-weight: bold;
-            border-radius: 50px;
-            box-shadow: 2px 2px 8px rgba(0,0,0,0.3);
-            color: white;
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            padding: 10px 20px;
+        .card-icon {
+          width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0;
+          display: flex; align-items: center; justify-content: center;
+          font-size: 18px; line-height: 1; overflow: hidden;
         }
 
-        .container {
-            padding-top: 50px;
+        .beta {
+          font-size: 9px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+          padding: 3px 8px; border-radius: 100px;
+          background: rgba(251,191,36,0.1); color: rgba(251,191,36,0.85);
+          border: 1px solid rgba(251,191,36,0.2); white-space: nowrap;
+          align-self: flex-start;
+        }
+
+        .card h3 {
+          font-size: 14px; font-weight: 700; color: #fff; line-height: 1.3;
+          margin-bottom: 7px;
+        }
+
+        .card p {
+          font-size: 12.5px; color: var(--muted); line-height: 1.65; font-weight: 300;
+          margin-bottom: 16px; min-height: 42px;
+        }
+
+        .card-btn {
+          display: inline-flex; align-items: center; gap: 6px;
+          font-family: 'Manrope', sans-serif; font-size: 11.5px; font-weight: 700;
+          text-decoration: none; border-radius: 7px; padding: 7px 13px;
+          width: fit-content; transition: opacity 0.15s, transform 0.15s;
+          letter-spacing: 0.01em; white-space: nowrap;
+          margin-top: auto;
+        }
+        .card-btn:hover { opacity: 0.8; transform: scale(1.03); }
+        .card-btn svg { width: 10px; height: 10px; flex-shrink: 0; }
+
+        /* ── EMPTY ── */
+        .empty {
+          grid-column: 1/-1; text-align: center;
+          padding: 64px 0; color: var(--muted); font-size: 14px; font-weight: 300;
+        }
+
+        /* ── FOOTER ── */
+        footer {
+          position: relative; z-index: 1; text-align: center;
+          padding: 28px; color: rgba(180,170,220,0.25);
+          font-size: 12px; font-weight: 400;
+          border-top: 1px solid var(--border);
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 720px) { .grid { grid-template-columns: repeat(2,1fr); } }
+        @media (max-width: 480px) {
+          .grid { grid-template-columns: 1fr; }
+          header { flex-direction: column; align-items: flex-start; }
+          .hero-stats { flex-direction: row; gap: 24px; }
+          .stat { text-align: left; }
+          .controls { flex-direction: column; align-items: flex-start; }
+          .search { width: 100%; }
         }
     </style>
 </head>
-
 <body>
 
-<div class="container py-5">
-    <h1 class="text-center mb-4">Welcome to My Collection</h1>
+<div class="bg-orbs"><span></span><span></span><span></span></div>
 
-    <!-- Apps Section -->
-    <h2 class="text-center mb-4">Apps</h2>
-    <div class="row justify-content-center" id="apps-container"></div>
+<header>
+    <div>
+        <div class="hero-label">Astray Hawk · Portfolio</div>
+        <h1>MY <span class="outline">WORK</span><br>SHELF.</h1>
+        <p class="hero-sub">Apps and tools — built with curiosity, shared freely.</p>
+    </div>
+    <div class="hero-stats">
+        <div class="stat">
+            <div class="stat-n" id="sn-apps">19</div>
+            <div class="stat-l">Apps</div>
+        </div>
+        <div class="stat">
+            <div class="stat-n">4</div>
+            <div class="stat-l">Sites</div>
+        </div>
+    </div>
+</header>
 
-    <div class="my-5"></div>
-
-    <!-- Websites Section -->
-    <h2 class="text-center mb-4">Websites</h2>
-    <div class="row justify-content-center" id="websites-container"></div>
+<div class="controls">
+    <div class="tabs">
+        <button class="tab active" data-tab="apps" onclick="switchTab(this)">
+            Apps <span class="cnt" id="tc-apps">19</span>
+        </button>
+        <button class="tab" data-tab="web" onclick="switchTab(this)">
+            Websites <span class="cnt" id="tc-web">4</span>
+        </button>
+    </div>
+    <div class="search">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <circle cx="7" cy="7" r="4.5"/>
+            <path d="M10.5 10.5l3 3"/>
+        </svg>
+        <input id="q" type="text" placeholder="Search…" oninput="filter()">
+    </div>
 </div>
 
+<div class="grid-area">
+    <div class="grid" id="grid"></div>
+</div>
+
+<footer>© Astray Hawk · All rights reserved</footer>
+
 <script>
-    /* ---------------- APPS LIST ---------------- */
-    const apps = [
-      /*
-      { // App No. undefined
-        name: "Youtube Clone",
-        desc: "Watch YouTube videos without ads and download them easily.",
-        link: "https://github.com/astrayhawk/Info/raw/main/Apks/Youtube_release.apk"
+    const EXT = `<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 2H2a1 1 0 00-1 1v7a1 1 0 001 1h7a1 1 0 001-1V7.5"/><path d="M8 1h3v3M11 1L5.5 6.5"/></svg>`;
 
-      },
-      { // App No. undefined
-        name: "AnimePehe Clone",
-        desc: "Watch YouTube videos without ads and download them easily.",
-        link: "https://github.com/astrayhawk/Info/raw/main/Apks/AnimePehe_release.apk"
+    const S = {
+      purple: { ib:'rgba(124,58,237,0.18)', ic:'#a78bfa', bb:'rgba(124,58,237,0.18)', bc:'#c4b5fd', bbr:'rgba(124,58,237,0.3)' },
+      cyan:   { ib:'rgba(6,182,212,0.16)',   ic:'#67e8f9', bb:'rgba(6,182,212,0.16)',   bc:'#a5f3fc', bbr:'rgba(6,182,212,0.28)' },
+      amber:  { ib:'rgba(245,158,11,0.16)',  ic:'#fcd34d', bb:'rgba(245,158,11,0.16)',  bc:'#fde68a', bbr:'rgba(245,158,11,0.28)' },
+      green:  { ib:'rgba(16,185,129,0.16)',  ic:'#6ee7b7', bb:'rgba(16,185,129,0.16)',  bc:'#a7f3d0', bbr:'rgba(16,185,129,0.28)' },
+      pink:   { ib:'rgba(236,72,153,0.16)',  ic:'#f9a8d4', bb:'rgba(236,72,153,0.16)',  bc:'#fbcfe8', bbr:'rgba(236,72,153,0.28)' },
+      slate:  { ib:'rgba(100,116,139,0.18)', ic:'#94a3b8', bb:'rgba(100,116,139,0.18)', bc:'#cbd5e1', bbr:'rgba(100,116,139,0.3)' },
+    };
 
-      }, 
-      
-      //Plastore Link starts with https://play.google.com/store/apps/details?id=
-      
-      */
-
-      { // App No.1
-        name: "Charging Monitor",
-        desc: "Get alerts when your phone reaches a set charging level with custom audio.",
-        bg: "#1ABC9C",
-        btn: "#16A085",
-        btn_txt: "PlayStore link",
-        link: "https://astrayhawk.github.io/Info/redirect.html?id=com.eagle.chargingmoniter"
-      },
-      { // App No.2
-        name: "Barcode Generator",
-        desc: "Generate and scan the barcodes.",
-        bg: "#E74C3C",
-        btn: "#C0392B",
-        btn_txt: "PlayStore link",
-        link: "https://astrayhawk.github.io/Info/redirect.html?id=com.hawks.barcodegenerator"
-      },
-      { // App No.3
-        name: "Traffic Counter",
-        desc: "Count, report and survey.",
-        bg: "#4CAF50",
-        btn: "#C0392B",
-        btn_txt: "PlayStore link",
-        link: "https://astrayhawk.github.io/Info/redirect.html?id=com.hawks.trafficsurvey"
-      },
-      { // App No.4
-        name: "VX Player",
-        desc: "Watch videos from storage and online.",
-        bg: "#F39C12",
-        btn: "#FF5722",
-        btn_txt: "PlayStore link",
-        link: "https://astrayhawk.github.io/Info/redirect.html?id=com.hawks.vx_player"
-      },
-      { // App No.5
-        name: "Device Info",
-        desc: "View device, battery, and network info in one simple app.",
-        bg: "#E74C3C",
-        btn: "#FF5722",
-        btn_txt: "PlayStore link",
-        link: "https://astrayhawk.github.io/Info/redirect.html?id=com.hawks.deviceinfo"
-      },
-      { // App No.6
-        name: "Server App",
-        desc: "Launch and test HTML websites over Wi-Fi for learning and testing.",
-        bg: "#1ABC9C",
-        btn: "#16A085",
-        btn_txt: "PlayStore link",
-        link: "https://astrayhawk.github.io/Info/redirect.html?id=com.eagle.serverapplication"
-      },
-      { // App No.7
-        name: "Video Factory",
-        desc: "Convert videos, download streams, and more.",
-        bg: "#4CAF50",
-        btn: "#C0392B",
-        btn_txt: "PlayStore link",
-        link: "https://astrayhawk.github.io/Info/redirect.html?id=com.hawks.videofactory"
-      },
-      { // App No.8
-        name: "Viber",
-        desc: "Keep your PC awake or use as a vibration tool.",
-        bg: "#2ECC71",
-        btn: "#16A085",
-        btn_txt: "PlayStore link",
-        link: "https://astrayhawk.github.io/Info/redirect.html?id=com.hawks.m_vibe"
-      },
-      { // App No.9
-        name: "SF:Source Fetcher",
-        desc: "Learn WebView, view HTML source & inspect HTTP calls.",
-        bg: "#F39C12",
-        btn: "#FF5722",
-        btn_txt: "PlayStore link",
-        link: "https://astrayhawk.github.io/Info/redirect.html?id=com.hawks.sourcefetcher"
-      },
-      { // App No.10
-        name: "GeoSnap",
-        desc: "Capture photos with GPS location & timestamp.",
-        bg: "#F39C12",
-        btn: "#FF5722",
-        btn_txt: "PlayStore link",
-        link: "https://astrayhawk.github.io/Info/redirect.html?id=com.hawks.gps_camera"
-      },
-      { // App No.11
-        name: "Black Cat",
-        desc: "Lock photos, videos & files in PIN-protected folders.",
-        bg: "#1ABC9C",
-        btn: "#16A085",
-        btn_txt: "PlayStore link",
-        link: "https://astrayhawk.github.io/Info/redirect.html?id=com.hawks.blackcat"
-      },
-      { // App No.12
-        name: "Bhagavad Gita",
-        desc: "Read, Listen & Learn the Bhagavad Gita.",
-        bg: "#4CAF50",
-        btn: "#C0392B",
-        btn_txt: "PlayStore link",
-        link: "https://astrayhawk.github.io/Info/redirect.html?id=com.hawks.mythicalbooks"
-      },
-      { // App No.13
-        name: "Tic Tac Toe",
-        desc: "Play Tic Tac Toe with friends or challenge Jack, the smart AI.",
-        bg: "#F39C12",
-        btn: "#FF5722",
-        btn_txt: "PlayStore link",
-        link: "https://astrayhawk.github.io/Info/redirect.html?id=com.hawks.tic_tac_toe"
-      },
-      { // App No.14
-        name: "TaskBee",
-        desc: "Schedule tasks and get notified exactly on time. Simple and reliable.",
-        bg: "#1ABC9C",
-        btn: "#16A085",
-        btn_txt: "PlayStore link",
-        link: "https://astrayhawk.github.io/Info/redirect.html?id=com.hawks.timebee"
-      },
-      { // App No.15
-        name: "Mock Location",
-        desc: "Mock GPS location using coordinates or Google Maps link for testing.",
-        bg: "#4CAF50",
-        btn: "#C0392B",
-        btn_txt: "PlayStore link",
-        link: "https://astrayhawk.github.io/Info/redirect.html?id=com.hawks.mock_location"
-      },
-      { // App No.16
-        name: "Numzy",
-        desc: "Fun math puzzles for kids. Learn numbers with quick brain games.",
-        bg: "#1ABC9C",
-        btn: "#16A085",
-        btn_txt: "PlayStore link",
-        link: "https://astrayhawk.github.io/Info/redirect.html?id=com.hawks.numzy"
-      },
-      { // App No.17
-        name: "Zone Alert (Under Closed Test)",
-        desc: "ZoneAlert reminds tasks by location. Get alerts when you reach places.",
-        bg: "#1ABC9C",
-        btn: "#16A085",
-        btn_txt: "PlayStore link",
-        link: "https://astrayhawk.github.io/Info/redirect.html?id=com.hawks.zone_alert"
-      },
-      { // App No.18
-        name: "ProtoPing (closed testing)",
-        desc: "Monitor website uptime and get instant alerts when sites go down.",
-        bg: "#4CAF50",
-        btn: "#C0392B",
-        btn_txt: "PlayStore link",
-        link: "https://astrayhawk.github.io/Info/redirect.html?id=com.hawks.protoping"
-      },
-      { // App No. undefined
-        name: "Online compiler",
-        desc: "Use ChatGPT on your mobile device.",
-        bg: "#34495E",
-        btn: "#2C3E50",
-        btn_txt: "Github link",
-        link: "https://github.com/astrayhawk/Info/raw/main/Apks/Compiler.apk"
-      }
+    const APPS = [
+      { name:'Charging Monitor',   desc:'Alerts when your phone hits a set charge level with custom audio.',   icon:'⚡', p:'amber',  link:'https://astrayhawk.github.io/Info/redirect.html?id=com.eagle.chargingmoniter',   bl:'Play Store' },
+      { name:'Barcode Generator',  desc:'Generate and scan barcodes instantly.',                               icon:'▦',  p:'purple', link:'https://astrayhawk.github.io/Info/redirect.html?id=com.hawks.barcodegenerator',   bl:'Play Store' },
+      { name:'Traffic Counter',    desc:'Count, report, and survey traffic.',                                  icon:'🚦', p:'green',  link:'https://astrayhawk.github.io/Info/redirect.html?id=com.hawks.trafficsurvey',       bl:'Play Store' },
+      { name:'VX Player',          desc:'Watch videos from storage and stream online.',                        icon:'▶',  p:'amber',  link:'https://astrayhawk.github.io/Info/redirect.html?id=com.hawks.vx_player',           bl:'Play Store' },
+      { name:'Device Info',        desc:'View device, battery, and network info in one place.',                icon:'📱', p:'pink',   link:'https://astrayhawk.github.io/Info/redirect.html?id=com.hawks.deviceinfo',          bl:'Play Store' },
+      { name:'Server App',         desc:'Launch and test HTML sites over Wi-Fi for learning.',                 icon:'🌐', p:'cyan',   link:'https://astrayhawk.github.io/Info/redirect.html?id=com.eagle.serverapplication',    bl:'Play Store' },
+      { name:'Video Factory',      desc:'Convert videos, download streams, and more.',                         icon:'🎬', p:'purple', link:'https://astrayhawk.github.io/Info/redirect.html?id=com.hawks.videofactory',         bl:'Play Store' },
+      { name:'Viber',              desc:'Keep your device awake or use as a vibration tool.',                  icon:'〰', p:'green',  link:'https://astrayhawk.github.io/Info/redirect.html?id=com.hawks.m_vibe',              bl:'Play Store' },
+      { name:'SF: Source Fetcher', desc:'Inspect HTML source and HTTP calls via WebView.',                     icon:'✦',  p:'amber',  link:'https://astrayhawk.github.io/Info/redirect.html?id=com.hawks.sourcefetcher',        bl:'Play Store' },
+      { name:'GeoSnap',            desc:'Capture photos with GPS location and timestamp.',                     icon:'📍', p:'cyan',   link:'https://astrayhawk.github.io/Info/redirect.html?id=com.hawks.gps_camera',           bl:'Play Store' },
+      { name:'Black Cat',          desc:'Lock photos, videos and files in PIN-protected folders.',             icon:'🔒', p:'purple', link:'https://astrayhawk.github.io/Info/redirect.html?id=com.hawks.blackcat',             bl:'Play Store' },
+      { name:'Bhagavad Gita',      desc:'Read, listen and learn the Bhagavad Gita.',                          icon:'📖', p:'amber',  link:'https://astrayhawk.github.io/Info/redirect.html?id=com.hawks.mythicalbooks',        bl:'Play Store' },
+      { name:'Tic Tac Toe',        desc:'Play with friends or challenge Jack, the smart AI.',                  icon:'✕',  p:'pink',   link:'https://astrayhawk.github.io/Info/redirect.html?id=com.hawks.tic_tac_toe',          bl:'Play Store' },
+      { name:'TaskBee',            desc:'Schedule tasks and get notified exactly on time.',                    icon:'🐝', p:'green',  link:'https://astrayhawk.github.io/Info/redirect.html?id=com.hawks.timebee',              bl:'Play Store' },
+      { name:'Mock Location',      desc:'Spoof GPS using coordinates or a Google Maps link.',                  icon:'🗺', p:'cyan',   link:'https://astrayhawk.github.io/Info/redirect.html?id=com.hawks.mock_location',        bl:'Play Store' },
+      { name:'Numzy',              desc:'Fun math puzzles for kids to learn numbers.',                         icon:'🔢', p:'purple', link:'https://astrayhawk.github.io/Info/redirect.html?id=com.hawks.numzy',                bl:'Play Store' },
+      { name:'Zone Alert',         desc:'Get reminders by location — alerts when you arrive.',                 icon:'📡', p:'green',  link:'https://astrayhawk.github.io/Info/redirect.html?id=com.hawks.zone_alert',           bl:'Play Store', beta:true },
+      { name:'ProtoPing',          desc:'Monitor website uptime and get instant down alerts.',                 icon:'📶', p:'cyan',   link:'https://astrayhawk.github.io/Info/redirect.html?id=com.hawks.protoping',            bl:'Play Store', beta:true },
+      { name:'Online Compiler',    desc:'Compile and run code from your mobile device.',                       icon:'⌨',  p:'slate',  link:'https://github.com/astrayhawk/Info/raw/main/Apks/Compiler.apk',                    bl:'GitHub' },
     ];
 
-    /* ---------------- WEBSITES LIST ---------------- */
-    const websites = [
-      {
-        name: "Trinetra",
-        desc: "Discover a collection of useful websites.",
-        bg: "#3498DB",
-        btn: "#1ABC9C",
-        btn_txt: "open",
-        link: "https://trinetra3.netlify.app/"
-      },
-      {
-        name: "Text Encryption Tool",
-        desc: "A modern encryption / decryption tool.",
-        bg: "#34495E",
-        btn: "#2C3E50",
-        btn_txt: "open",
-        link: "https://trinetra3.netlify.app/Pages/Encrypt.html"
-      },
-      {
-        name: "Moon Finder",
-        desc: "Find the moon’s direction from your location.",
-        bg: "#9B59B6",
-        btn: "#8E44AD",
-        btn_txt: "open",
-        link: "https://webtestkit-hdbr.onrender.com/moon"
-      },
-      {
-        name: "Hello Stranger",
-        desc: "Anonymous chat with zero data storage.",
-        bg: "#4CAF50",
-        btn: "#FF5722",
-        btn_txt: "open",
-        link: "https://webtestkit-hdbr.onrender.com/chat"
-      }
+    const WEB = [
+      { name:'Trinetra',             desc:'A curated collection of useful websites.',          icon:'🔱', p:'cyan',   link:'https://trinetra3.netlify.app/',                           bl:'Open Site' },
+      { name:'Text Encryption Tool', desc:'Encrypt and decrypt text with a modern tool.',      icon:'🔐', p:'purple', link:'https://trinetra3.netlify.app/Pages/Encrypt.html',         bl:'Open Site' },
+      { name:'Moon Finder',          desc:"Find the moon's direction from your location.",     icon:'🌙', p:'pink',   link:'https://webtestkit-hdbr.onrender.com/moon',                bl:'Open Site' },
+      { name:'Hello Stranger',       desc:'Anonymous chat with zero data storage.',            icon:'💬', p:'green',  link:'https://webtestkit-hdbr.onrender.com/chat',                bl:'Open Site' },
     ];
 
-    /* ---------------- RENDER FUNCTION ---------------- */
-    function renderCards(list, containerId) {
-      let container = document.getElementById(containerId);
-      list.forEach(item => {
-        container.innerHTML += `
-          <div class="col-md-4 mb-3">
-            <div class="card shadow" style="background-color:${item.bg}">
-              <div class="card-body text-center">
-                <h5 class="card-title">${item.name}</h5>
-                <p class="card-text">${item.desc}</p>
-                <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="btn" style="background-color:${item.btn}">
-                  ${item.btn_txt}
-                </a>
-              </div>
-            </div>
-          </div>`;
-      });
+    let activeTab = 'apps';
+
+    function card(d) {
+      const s = S[d.p];
+      return `
+      <div class="card">
+        <div class="card-top">
+          <div class="card-icon" style="background:${s.ib};color:${s.ic}">${d.icon}</div>
+          ${d.beta ? '<span class="beta">Beta</span>' : '<span></span>'}
+        </div>
+        <h3>${d.name}</h3>
+        <p>${d.desc}</p>
+        <a class="card-btn" href="${d.link}" target="_blank" rel="noopener noreferrer"
+          style="background:${s.bb};color:${s.bc};border:1px solid ${s.bbr}">
+          ${d.bl} ${EXT}
+        </a>
+      </div>`;
     }
 
-    /* ---------------- RUN ---------------- */
-    renderCards(apps, "apps-container");
-    renderCards(websites, "websites-container");
-</script>
+    function render(data, q) {
+      const list = q ? data.filter(d => (d.name + ' ' + d.desc).toLowerCase().includes(q)) : data;
+      document.getElementById('grid').innerHTML = list.length
+        ? list.map(card).join('')
+        : `<div class="empty">No results for "${q}"</div>`;
+    }
 
+    function switchTab(el) {
+      activeTab = el.dataset.tab;
+      document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+      el.classList.add('active');
+      document.getElementById('q').value = '';
+      render(activeTab === 'apps' ? APPS : WEB, '');
+    }
+
+    function filter() {
+      render(activeTab === 'apps' ? APPS : WEB, document.getElementById('q').value.toLowerCase().trim());
+    }
+
+    // Init counts
+    document.getElementById('tc-apps').textContent = APPS.length;
+    document.getElementById('tc-web').textContent = WEB.length;
+    document.getElementById('sn-apps').textContent = APPS.length;
+    render(APPS, '');
+</script>
 </body>
 </html>
