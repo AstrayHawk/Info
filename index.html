@@ -1,378 +1,380 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Astray Hawk · Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Syne:wght@700;800&display=swap"
-          rel="stylesheet">
+    <title>Astray Hawk · Apps and tools</title>
+    <meta name="description" content="Android apps and web tools by Astray Hawk.">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
     <style>
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-        :root {
-          --bg: #060610;
-          --surface: rgba(255,255,255,0.03);
-          --border: rgba(255,255,255,0.07);
-          --border-hover: rgba(255,255,255,0.14);
-          --text: #e0dcf8;
-          --muted: rgba(180,170,220,0.45);
-          --accent: #7c3aed;
+        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+        :root{
+            --bg:#f5f6fa;--card:#fff;--border:#e4e6ee;--text:#14151f;--muted:#5d6277;
+            --accent:#4f46e5;--accent-ink:#fff;
+            --shadow:0 1px 2px rgba(20,21,31,.05),0 8px 24px -12px rgba(20,21,31,.12);
+            --bar:rgba(245,246,250,.85);--chip:#eef0f7;
+        }
+        @media(prefers-color-scheme:dark){
+            :root{
+                --bg:#0d0e14;--card:#161722;--border:#262836;--text:#eceefa;--muted:#9a9fb8;
+                --accent:#818cf8;--accent-ink:#0d0e14;--shadow:none;
+                --bar:rgba(13,14,20,.85);--chip:#1e2030;
+            }
         }
 
-        html { scroll-behavior: smooth; }
+        html{scroll-behavior:smooth;scroll-padding-top:80px}
+        body{
+            background:var(--bg);color:var(--text);
+            font-family:'Manrope',system-ui,sans-serif;
+            line-height:1.55;-webkit-font-smoothing:antialiased;
+        }
+        a{color:inherit}
+        a:focus-visible,button:focus-visible,input:focus-visible{
+            outline:2px solid var(--accent);outline-offset:2px
+        }
+        .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
 
-        body {
-          background: var(--bg);
-          color: var(--text);
-          font-family: 'Manrope', sans-serif;
-          min-height: 100vh;
-          overflow-x: hidden;
+        /* Hero */
+        .hero{padding:72px 0 48px}
+        .hero h1{
+            font-size:clamp(34px,5.4vw,56px);font-weight:800;
+            line-height:1.08;letter-spacing:-.03em;max-width:15ch
         }
+        .hero p{margin-top:16px;font-size:17px;color:var(--muted);max-width:46ch}
+        .hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+        .btn{
+            display:inline-flex;align-items:center;gap:10px;padding:12px 20px;
+            border-radius:12px;font-size:14px;font-weight:700;text-decoration:none;
+            transition:transform .15s,box-shadow .15s,background .15s
+        }
+        .btn svg{width:18px;height:18px}
+        .btn-primary{background:var(--accent);color:var(--accent-ink)}
+        .btn-primary:hover{transform:translateY(-1px)}
+        .btn-ghost{
+            background:var(--card);border:1px solid var(--border);box-shadow:var(--shadow)
+        }
+        .btn-ghost:hover{border-color:var(--accent)}
 
-        /* ── BACKGROUND ── */
-        .bg-orbs {
-          position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden;
+        /* Toolbar */
+        .bar{
+            position:sticky;top:0;z-index:5;background:var(--bar);
+            backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+            border-bottom:1px solid var(--border)
         }
-        .bg-orbs span {
-          position: absolute; border-radius: 50%;
-          filter: blur(100px); opacity: 0.13;
+        .bar .wrap{
+            display:flex;align-items:center;justify-content:space-between;
+            gap:16px;padding-top:12px;padding-bottom:12px
         }
-        .bg-orbs span:nth-child(1) { width: 700px; height: 700px; background: #4f0fbf; top: -250px; left: -200px; }
-        .bg-orbs span:nth-child(2) { width: 500px; height: 500px; background: #0891b2; bottom: -150px; right: -150px; }
-        .bg-orbs span:nth-child(3) { width: 350px; height: 350px; background: #be185d; top: 45%; left: 50%; transform: translate(-50%,-50%); }
+        .tabs{display:flex;gap:4px;background:var(--chip);padding:4px;border-radius:12px}
+        .tab{
+            border:0;background:none;font:700 13px 'Manrope',sans-serif;
+            color:var(--muted);padding:8px 16px;border-radius:9px;
+            cursor:pointer;display:flex;gap:8px;align-items:center
+        }
+        .tab .cnt{font-size:11px;opacity:.75}
+        .tab.active{
+            background:var(--card);color:var(--text);
+            box-shadow:0 1px 3px rgba(0,0,0,.12)
+        }
+        .search{
+            display:flex;align-items:center;gap:8px;background:var(--card);
+            border:1px solid var(--border);border-radius:12px;padding:9px 14px;width:260px
+        }
+        .search:focus-within{border-color:var(--accent)}
+        .search svg{width:15px;height:15px;color:var(--muted);flex-shrink:0}
+        .search input{
+            border:0;outline:0;background:none;font:500 14px 'Manrope',sans-serif;
+            color:var(--text);width:100%
+        }
+        .search input::placeholder{color:var(--muted)}
 
-        /* ── LAYOUT ── */
-        .page { position: relative; z-index: 1; max-width: 1020px; margin: 0 auto; padding: 0 28px; }
-
-        /* ── HERO ── */
-        header {
-          position: relative; z-index: 1;
-          padding: 60px 28px 44px;
-          max-width: 1020px; margin: 0 auto;
-          display: flex; align-items: flex-end; justify-content: space-between; gap: 32px;
-          flex-wrap: wrap;
+        /* Grid */
+        .grid{
+            display:grid;grid-template-columns:repeat(3,1fr);
+            gap:18px;padding:32px 0 80px
         }
-
-        .hero-label {
-          display: inline-flex; align-items: center; gap: 8px;
-          font-size: 11px; font-weight: 600; letter-spacing: 0.2em;
-          text-transform: uppercase; color: rgba(139,92,246,0.75);
-          margin-bottom: 16px;
+        .card{
+            background:var(--card);border:1px solid var(--border);
+            border-radius:18px;padding:22px;display:flex;flex-direction:column;
+            box-shadow:var(--shadow);transition:transform .2s,border-color .2s
         }
-        .hero-label::before {
-          content: ''; display: block;
-          width: 24px; height: 1.5px;
-          background: linear-gradient(90deg,#7c3aed,transparent);
+        .card:hover{transform:translateY(-3px);border-color:var(--accent)}
+        .card-head{display:flex;align-items:center;gap:14px}
+        .icon{
+            position:relative;width:64px;height:64px;border-radius:16px;
+            flex-shrink:0;overflow:hidden;display:flex;align-items:center;
+            justify-content:center;color:#fff;font-weight:800;font-size:22px;
+            letter-spacing:-.02em
         }
-
-        h1 {
-          font-family: 'Syne', sans-serif;
-          font-size: clamp(44px, 7.5vw, 80px);
-          font-weight: 800; line-height: 0.95;
-          letter-spacing: -0.025em; color: #fff;
+        .icon img{
+            position:absolute;inset:0;width:100%;height:100%;
+            object-fit:cover;background:var(--card)
         }
-        h1 .outline {
-          -webkit-text-stroke: 1.5px rgba(255,255,255,0.2);
-          color: transparent;
+        .card h3{font-size:16px;font-weight:700;line-height:1.25}
+        .beta{
+            display:inline-block;margin-top:5px;font-size:11px;font-weight:700;
+            color:#b45309;background:#fef3c7;padding:2px 9px;border-radius:100px
         }
-
-        .hero-sub {
-          margin-top: 16px; font-size: 14px; font-weight: 300;
-          color: var(--muted); line-height: 1.75; max-width: 320px;
+        @media(prefers-color-scheme:dark){
+            .beta{color:#fcd34d;background:rgba(251,191,36,.14)}
         }
-
-        .hero-stats { display: flex; gap: 32px; padding-bottom: 4px; flex-shrink: 0; }
-        .stat { text-align: right; }
-        .stat-n {
-          font-family: 'Syne', sans-serif;
-          font-size: 40px; font-weight: 800; color: #fff; line-height: 1;
-          letter-spacing: -0.02em;
+        .card p{
+            margin:16px 0 20px;font-size:14px;color:var(--muted);flex:1;
+            display:-webkit-box;-webkit-line-clamp:3;
+            -webkit-box-orient:vertical;overflow:hidden
         }
-        .stat-l {
-          font-size: 10px; font-weight: 600; letter-spacing: 0.16em;
-          text-transform: uppercase; color: rgba(180,170,220,0.35); margin-top: 4px;
+        .card-foot{
+            display:flex;align-items:center;justify-content:space-between;
+            gap:10px;border-top:1px solid var(--border);padding-top:16px
         }
-
-        /* ── CONTROLS ── */
-        .controls {
-          position: relative; z-index: 1;
-          max-width: 1020px; margin: 0 auto;
-          padding: 0 28px 24px;
-          display: flex; align-items: center; justify-content: space-between; gap: 16px;
-          flex-wrap: wrap;
-          border-bottom: 1px solid var(--border);
-          padding-bottom: 20px;
+        .src{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;color:var(--muted)}
+        .src svg{width:16px;height:16px}
+        .get{
+            font-size:13px;font-weight:700;text-decoration:none;color:var(--accent-ink);
+            background:var(--accent);padding:8px 16px;border-radius:100px;
+            transition:opacity .15s
         }
-
-        .tabs { display: flex; gap: 6px; }
-        .tab {
-          background: none; border: 1px solid transparent;
-          font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 600;
-          color: rgba(180,170,220,0.4); border-radius: 8px;
-          padding: 8px 18px; cursor: pointer; transition: all 0.18s;
-          display: flex; align-items: center; gap: 7px;
-        }
-        .tab .cnt {
-          font-size: 10px; font-weight: 700;
-          background: rgba(255,255,255,0.07); border-radius: 100px;
-          padding: 2px 7px; color: rgba(180,170,220,0.5);
-          transition: all 0.18s;
-        }
-        .tab.active {
-          background: rgba(124,58,237,0.18);
-          border-color: rgba(124,58,237,0.35);
-          color: #c4b5fd;
-        }
-        .tab.active .cnt {
-          background: rgba(124,58,237,0.3); color: #ddd6fe;
-        }
-        .tab:hover:not(.active) {
-          color: rgba(180,170,220,0.75); background: rgba(255,255,255,0.04);
-        }
-
-        .search {
-          display: flex; align-items: center; gap: 9px;
-          background: rgba(255,255,255,0.04); border: 1px solid var(--border);
-          border-radius: 8px; padding: 8px 14px; width: 220px;
-          transition: border-color 0.18s;
-        }
-        .search:focus-within { border-color: rgba(124,58,237,0.45); }
-        .search svg { width: 14px; height: 14px; flex-shrink: 0; color: rgba(180,170,220,0.3); }
-        .search input {
-          background: none; border: none; outline: none;
-          font-family: 'Manrope', sans-serif; font-size: 13px;
-          color: var(--text); width: 100%;
-        }
-        .search input::placeholder { color: rgba(180,170,220,0.3); }
-
-        /* ── GRID ── */
-        .grid-area { position: relative; z-index: 1; max-width: 1020px; margin: 0 auto; padding: 24px 28px 72px; }
-
-        .grid {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 12px;
-          align-items: start;
+        .get:hover{opacity:.85}
+        .empty{grid-column:1/-1;text-align:center;padding:72px 0;color:var(--muted)}
+        footer{
+            border-top:1px solid var(--border);text-align:center;
+            padding:28px;color:var(--muted);font-size:13px
         }
 
-        /* ── CARD ── */
-        .card {
-          background: var(--surface);
-          border: 1px solid var(--border);
-          border-radius: 14px;
-          padding: 20px;
-          display: flex; flex-direction: column; gap: 0;
-          transition: transform 0.22s ease, border-color 0.22s ease, background 0.22s ease;
-          text-decoration: none; color: inherit;
+        @media(max-width:820px){
+            .grid{grid-template-columns:repeat(2,1fr)}
         }
-        .card:hover {
-          transform: translateY(-4px);
-          border-color: var(--border-hover);
-          background: rgba(255,255,255,0.05);
+        @media(max-width:560px){
+            .hero{padding:44px 0 32px}
+            .grid{grid-template-columns:1fr;gap:14px}
+            .btn{flex:1;justify-content:center}
+            .bar .wrap{flex-direction:column;align-items:stretch}
+            .search{width:100%}
+            .tabs .tab{flex:1;justify-content:center}
         }
-
-        .card-top {
-          display: flex; align-items: flex-start; justify-content: space-between;
-          margin-bottom: 14px;
-        }
-
-        .card-icon {
-          width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0;
-          display: flex; align-items: center; justify-content: center;
-          font-size: 18px; line-height: 1; overflow: hidden;
-        }
-
-        .beta {
-          font-size: 9px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
-          padding: 3px 8px; border-radius: 100px;
-          background: rgba(251,191,36,0.1); color: rgba(251,191,36,0.85);
-          border: 1px solid rgba(251,191,36,0.2); white-space: nowrap;
-          align-self: flex-start;
-        }
-
-        .card h3 {
-          font-size: 14px; font-weight: 700; color: #fff; line-height: 1.3;
-          margin-bottom: 7px;
-        }
-
-        .card p {
-          font-size: 12.5px; color: var(--muted); line-height: 1.65; font-weight: 300;
-          margin-bottom: 16px; min-height: 42px;
-        }
-
-        .card-btn {
-          display: inline-flex; align-items: center; gap: 6px;
-          font-family: 'Manrope', sans-serif; font-size: 11.5px; font-weight: 700;
-          text-decoration: none; border-radius: 7px; padding: 7px 13px;
-          width: fit-content; transition: opacity 0.15s, transform 0.15s;
-          letter-spacing: 0.01em; white-space: nowrap;
-          margin-top: auto;
-        }
-        .card-btn:hover { opacity: 0.8; transform: scale(1.03); }
-        .card-btn svg { width: 10px; height: 10px; flex-shrink: 0; }
-
-        /* ── EMPTY ── */
-        .empty {
-          grid-column: 1/-1; text-align: center;
-          padding: 64px 0; color: var(--muted); font-size: 14px; font-weight: 300;
-        }
-
-        /* ── FOOTER ── */
-        footer {
-          position: relative; z-index: 1; text-align: center;
-          padding: 28px; color: rgba(180,170,220,0.25);
-          font-size: 12px; font-weight: 400;
-          border-top: 1px solid var(--border);
-        }
-
-        /* ── RESPONSIVE ── */
-        @media (max-width: 720px) { .grid { grid-template-columns: repeat(2,1fr); } }
-        @media (max-width: 480px) {
-          .grid { grid-template-columns: 1fr; }
-          header { flex-direction: column; align-items: flex-start; }
-          .hero-stats { flex-direction: row; gap: 24px; }
-          .stat { text-align: left; }
-          .controls { flex-direction: column; align-items: flex-start; }
-          .search { width: 100%; }
+        @media(prefers-reduced-motion:reduce){
+            *{transition:none!important}
         }
     </style>
 </head>
+
 <body>
 
-<div class="bg-orbs"><span></span><span></span><span></span></div>
+<div class="wrap">
+    <header class="hero">
+        <h1>Apps and tools, built with curiosity.</h1>
+        <p>Android apps and web tools by Astray Hawk. Free to use and share.</p>
 
-<header>
-    <div>
-        <div class="hero-label">Astray Hawk · Portfolio</div>
-        <h1>MY <span class="outline">WORK</span><br>SHELF.</h1>
-        <p class="hero-sub">Apps and tools — built with curiosity, shared freely.</p>
-    </div>
-    <div class="hero-stats">
-        <div class="stat">
-            <div class="stat-n" id="sn-apps">19</div>
-            <div class="stat-l">Apps</div>
-        </div>
-        <div class="stat">
-            <div class="stat-n">4</div>
-            <div class="stat-l">Sites</div>
-        </div>
-    </div>
-</header>
+        <div class="hero-actions">
+            <a class="btn btn-primary" id="hero-profile" target="_blank"
+               rel="noopener noreferrer"
+               href="https://play.google.com/store/apps/dev?id=7297521515170224649"></a>
 
-<div class="controls">
-    <div class="tabs">
-        <button class="tab active" data-tab="apps" onclick="switchTab(this)">
-            Apps <span class="cnt" id="tc-apps">19</span>
-        </button>
-        <button class="tab" data-tab="web" onclick="switchTab(this)">
-            Websites <span class="cnt" id="tc-web">4</span>
-        </button>
-    </div>
-    <div class="search">
-        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-            <circle cx="7" cy="7" r="4.5"/>
-            <path d="M10.5 10.5l3 3"/>
-        </svg>
-        <input id="q" type="text" placeholder="Search…" oninput="filter()">
+            <a class="btn btn-ghost" id="hero-all" target="_blank"
+               rel="noopener noreferrer"
+               href="https://play.google.com/store/apps/developer?id=Astray+Hawk"></a>
+        </div>
+    </header>
+</div>
+
+<div class="bar">
+    <div class="wrap">
+        <div class="tabs" role="tablist">
+            <button class="tab active" role="tab" aria-selected="true"
+                    data-tab="apps" onclick="switchTab(this)">
+                Apps <span class="cnt" id="tc-apps"></span>
+            </button>
+
+            <button class="tab" role="tab" aria-selected="false"
+                    data-tab="web" onclick="switchTab(this)">
+                Websites <span class="cnt" id="tc-web"></span>
+            </button>
+        </div>
+
+        <label class="search">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor"
+                 stroke-width="2" stroke-linecap="round">
+                <circle cx="7" cy="7" r="4.5"/>
+                <path d="M10.5 10.5l3 3"/>
+            </svg>
+            <input id="q" type="search" placeholder="Search apps and tools"
+                   aria-label="Search" oninput="filter()">
+        </label>
     </div>
 </div>
 
-<div class="grid-area">
-    <div class="grid" id="grid"></div>
+<div class="wrap">
+    <main class="grid" id="grid"></main>
 </div>
 
-<footer>© Astray Hawk · All rights reserved</footer>
+<footer>© Astray Hawk. All rights reserved.</footer>
 
 <script>
-    const EXT = `<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 2H2a1 1 0 00-1 1v7a1 1 0 001 1h7a1 1 0 001-1V7.5"/><path d="M8 1h3v3M11 1L5.5 6.5"/></svg>`;
+    const ICON = {
+        play: `<svg viewBox="0 0 24 24" aria-hidden="true">
+            <path fill="#00A0FF" d="M3.6 2.3c-.4.3-.6.8-.6 1.4v16.6c0 .6.2 1.1.6 1.4L13.3 12z"/>
+            <path fill="#00E676" d="M13.3 12l3.3-3.3L5.2 2.1c-.5-.3-1.1-.3-1.6.2z"/>
+            <path fill="#FF3A44" d="M13.3 12L3.6 21.7c.5.5 1.1.5 1.6.2l11.4-6.6z"/>
+            <path fill="#FFD500" d="M16.6 8.7L13.3 12l3.3 3.3 3.8-2.2c1.1-.6 1.1-2.1 0-2.7z"/>
+        </svg>`,
 
-    const S = {
-      purple: { ib:'rgba(124,58,237,0.18)', ic:'#a78bfa', bb:'rgba(124,58,237,0.18)', bc:'#c4b5fd', bbr:'rgba(124,58,237,0.3)' },
-      cyan:   { ib:'rgba(6,182,212,0.16)',   ic:'#67e8f9', bb:'rgba(6,182,212,0.16)',   bc:'#a5f3fc', bbr:'rgba(6,182,212,0.28)' },
-      amber:  { ib:'rgba(245,158,11,0.16)',  ic:'#fcd34d', bb:'rgba(245,158,11,0.16)',  bc:'#fde68a', bbr:'rgba(245,158,11,0.28)' },
-      green:  { ib:'rgba(16,185,129,0.16)',  ic:'#6ee7b7', bb:'rgba(16,185,129,0.16)',  bc:'#a7f3d0', bbr:'rgba(16,185,129,0.28)' },
-      pink:   { ib:'rgba(236,72,153,0.16)',  ic:'#f9a8d4', bb:'rgba(236,72,153,0.16)',  bc:'#fbcfe8', bbr:'rgba(236,72,153,0.28)' },
-      slate:  { ib:'rgba(100,116,139,0.18)', ic:'#94a3b8', bb:'rgba(100,116,139,0.18)', bc:'#cbd5e1', bbr:'rgba(100,116,139,0.3)' },
+        gh: `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.37-3.87-1.37-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.69 1.25 3.35.96.1-.74.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 015.77 0c2.2-1.49 3.17-1.18 3.17-1.18.62 1.59.23 2.76.11 3.05.74.81 1.18 1.83 1.18 3.09 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0023.5 12C23.5 5.65 18.35.5 12 .5z"/>
+        </svg>`,
+
+        web: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="9.5"/>
+            <path d="M2.5 12h19M12 2.5c2.6 2.8 3.9 6 3.9 9.5s-1.3 6.7-3.9 9.5c-2.6-2.8-3.9-6-3.9-9.5S9.4 5.3 12 2.5z"/>
+        </svg>`
     };
 
+    const ACTION = {play:'Get app',gh:'Download',web:'Visit'};
+    const SRC = {play:'Google Play',gh:'GitHub APK',web:'Website'};
+
+    const GRAD = {
+        purple:'#7c3aed,#a78bfa',
+        cyan:'#0891b2,#22d3ee',
+        amber:'#d97706,#fbbf24',
+        green:'#059669,#34d399',
+        pink:'#db2777,#f472b6',
+        slate:'#475569,#94a3b8'
+    };
+
+    const R = 'https://astrayhawk.github.io/Info/redirect.html?id=';
+
     const APPS = [
-      { name:'PlayStore Page',     desc:'Please check our Playstore page and apps',                            icon:'▶', p:'cyan',  link:'https://play.google.com/store/apps/dev?id=7297521515170224649',                    bl:'Play Store' },
-      { name:'All Apps',           desc:'Here you can find all the Apps.',                                     icon:'▶', p:'slate',  link:'https://play.google.com/store/apps/developer?id=Astray+Hawk',                    bl:'Play Store' },
-      { name:'Charging Monitor',   desc:'Alerts when your phone hits a set charge level with custom audio.',   icon:'⚡', p:'amber',  link:'https://astrayhawk.github.io/Info/redirect.html?id=com.eagle.chargingmoniter',   bl:'Play Store' },
-      { name:'Barcode Generator',  desc:'Generate and scan barcodes instantly.',                               icon:'▦',  p:'purple', link:'https://astrayhawk.github.io/Info/redirect.html?id=com.hawks.barcodegenerator',   bl:'Play Store' },
-      { name:'Traffic Counter',    desc:'Count, report, and survey traffic.',                                  icon:'🚦', p:'green',  link:'https://astrayhawk.github.io/Info/redirect.html?id=com.hawks.trafficsurvey',       bl:'Play Store' },
-      { name:'VX Player',          desc:'Watch videos from storage and stream online.',                        icon:'▶',  p:'amber',  link:'https://astrayhawk.github.io/Info/redirect.html?id=com.hawks.vx_player',           bl:'Play Store' },
-      { name:'Device Info',        desc:'View device, battery, and network info in one place.',                icon:'📱', p:'pink',   link:'https://astrayhawk.github.io/Info/redirect.html?id=com.hawks.deviceinfo',          bl:'Play Store' },
-      { name:'Server App',         desc:'Launch and test HTML sites over Wi-Fi for learning.',                 icon:'🌐', p:'cyan',   link:'https://astrayhawk.github.io/Info/redirect.html?id=com.eagle.serverapplication',    bl:'Play Store' },
-      { name:'Video Factory',      desc:'Convert videos, download streams, and more.',                         icon:'🎬', p:'purple', link:'https://astrayhawk.github.io/Info/redirect.html?id=com.hawks.videofactory',         bl:'Play Store' },
-      { name:'Viber',              desc:'Keep your device awake or use as a vibration tool.',                  icon:'〰', p:'green',  link:'https://astrayhawk.github.io/Info/redirect.html?id=com.hawks.m_vibe',              bl:'Play Store' },
-      { name:'SF: Source Fetcher', desc:'Inspect HTML source and HTTP calls via WebView.',                     icon:'✦',  p:'amber',  link:'https://astrayhawk.github.io/Info/redirect.html?id=com.hawks.sourcefetcher',        bl:'Play Store' },
-      { name:'GeoSnap',            desc:'Capture photos with GPS location and timestamp.',                     icon:'📍', p:'cyan',   link:'https://astrayhawk.github.io/Info/redirect.html?id=com.hawks.gps_camera',           bl:'Play Store' },
-      { name:'Black Cat',          desc:'Lock photos, videos and files in PIN-protected folders.',             icon:'🔒', p:'purple', link:'https://astrayhawk.github.io/Info/redirect.html?id=com.hawks.blackcat',             bl:'Play Store' },
-      { name:'Bhagavad Gita',      desc:'Read, listen and learn the Bhagavad Gita.',                          icon:'📖', p:'amber',  link:'https://astrayhawk.github.io/Info/redirect.html?id=com.hawks.mythicalbooks',        bl:'Play Store' },
-      { name:'Tic Tac Toe',        desc:'Play with friends or challenge Jack, the smart AI.',                  icon:'✕',  p:'pink',   link:'https://astrayhawk.github.io/Info/redirect.html?id=com.hawks.tic_tac_toe',          bl:'Play Store' },
-      { name:'TaskBee',            desc:'Schedule tasks and get notified exactly on time.',                    icon:'🐝', p:'green',  link:'https://astrayhawk.github.io/Info/redirect.html?id=com.hawks.timebee',              bl:'Play Store' },
-      { name:'Mock Location',      desc:'Spoof GPS using coordinates or a Google Maps link.',                  icon:'🗺', p:'cyan',   link:'https://astrayhawk.github.io/Info/redirect.html?id=com.hawks.mock_location',        bl:'Play Store' },
-      { name:'Numzy',              desc:'Fun math puzzles for kids to learn numbers.',                         icon:'🔢', p:'purple', link:'https://astrayhawk.github.io/Info/redirect.html?id=com.hawks.numzy',                bl:'Play Store' },
-      { name:'ProtoPing',          desc:'Monitor website uptime and get instant down alerts.',                 icon:'📶', p:'cyan',   link:'https://astrayhawk.github.io/Info/redirect.html?id=com.hawks.protoping',            bl:'Play Store'},
-      { name:'Zone Alert',         desc:'Get reminders by location — alerts when you arrive.',                 icon:'📡', p:'green',  link:'https://astrayhawk.github.io/Info/redirect.html?id=com.hawks.zone_alert',           bl:'Play Store', beta:true },
-      { name:'Shinobi Run',        desc:'Dash as a ninja across water, earth & wood paths. Jump, slide & beat your best!',                     icon:'📍', p:'cyan',   link:'https://astrayhawk.github.io/Info/redirect.html?id=com.hawks.shinobi_run',           bl:'Play Store', beta:true },
-      { name:'Highway Horizon',    desc:'Race bikes & cars through 100 highway rounds. Dodge traffic, hit nitro, win!',             icon:'🔒', p:'purple', link:'https://astrayhawk.github.io/Info/redirect.html?id=com.hawks.highwayhorizon',             bl:'Play Store', beta:true },
-      { name:'Rank Zero',          desc:'Rise from F-Rank to S-Rank. Slash through dungeons, slay bosses, Awaken!',                icon:'📱', p:'pink',   link:'https://astrayhawk.github.io/Info/redirect.html?id=com.hawks.rankzero',          bl:'Play Store' , beta:true},
-      { name:'Online Compiler',    desc:'Compile and run code from your mobile device.',                       icon:'⌨',  p:'slate',  link:'https://github.com/astrayhawk/Info/raw/main/Apks/Compiler.apk',                    bl:'GitHub' },
-      { name:'Broswer',            desc:'Simple broeser.',                                                     icon:'⌨',  p:'green',  link:'https://github.com/astrayhawk/Info/raw/main/Apks/Browser.apk',                    bl:'GitHub' }
+        {name:'Charging Monitor',desc:'Alerts when your phone hits a set charge level, with custom audio.',p:'amber',t:'play',link:R+'com.eagle.chargingmoniter'},
+        {name:'Barcode Generator',desc:'Generate and scan barcodes instantly.',p:'purple',t:'play',link:R+'com.hawks.barcodegenerator'},
+        {name:'Traffic Counter',desc:'Count, report, and survey traffic.',p:'green',t:'play',link:R+'com.hawks.trafficsurvey'},
+        {name:'VX Player',desc:'Watch videos from storage and stream online.',p:'amber',t:'play',link:R+'com.hawks.vx_player'},
+        {name:'Device Info',desc:'View device, battery, and network info in one place.',p:'pink',t:'play',link:R+'com.hawks.deviceinfo'},
+        {name:'Server App',desc:'Launch and test HTML sites over Wi-Fi for learning.',p:'cyan',t:'play',link:R+'com.eagle.serverapplication'},
+        {name:'Video Factory',desc:'Convert videos, download streams, and more.',p:'purple',t:'play',link:R+'com.hawks.videofactory'},
+        {name:'Viber',desc:'Keep your device awake or use it as a vibration tool.',p:'green',t:'play',link:R+'com.hawks.m_vibe'},
+        {name:'SF: Source Fetcher',desc:'Inspect HTML source and HTTP calls via WebView.',p:'amber',t:'play',link:R+'com.hawks.sourcefetcher'},
+        {name:'GeoSnap',desc:'Capture photos with GPS location and timestamp.',p:'cyan',t:'play',link:R+'com.hawks.gps_camera'},
+        {name:'Black Cat',desc:'Lock photos, videos and files in PIN-protected folders.',p:'purple',t:'play',link:R+'com.hawks.blackcat'},
+        {name:'Bhagavad Gita',desc:'Read, listen and learn the Bhagavad Gita.',p:'amber',t:'play',link:R+'com.hawks.mythicalbooks'},
+        {name:'Tic Tac Toe',desc:'Play with friends or challenge Jack, the smart AI.',p:'pink',t:'play',link:R+'com.hawks.tic_tac_toe'},
+        {name:'TaskBee',desc:'Schedule tasks and get notified exactly on time.',p:'green',t:'play',link:R+'com.hawks.timebee'},
+        {name:'Mock Location',desc:'Spoof GPS using coordinates or a Google Maps link.',p:'cyan',t:'play',link:R+'com.hawks.mock_location'},
+        {name:'Numzy',desc:'Fun math puzzles for kids to learn numbers.',p:'purple',t:'play',link:R+'com.hawks.numzy'},
+        {name:'ProtoPing',desc:'Monitor website uptime and get instant down alerts.',p:'cyan',t:'play',link:R+'com.hawks.protoping'},
+        {name:'Zone Alert',desc:'Get reminders by location, with alerts when you arrive.',p:'green',t:'play',link:R+'com.hawks.zone_alert',beta:true},
+        {name:'Shinobi Run',desc:'Dash as a ninja across water, earth and wood paths. Jump, slide and beat your best.',p:'cyan',t:'play',link:R+'com.hawks.shinobi_run',beta:true},
+        {name:'Highway Horizon',desc:'Race bikes and cars through 100 highway rounds. Dodge traffic, hit nitro, win.',p:'purple',t:'play',link:R+'com.hawks.highwayhorizon',beta:true},
+        {name:'Rank Zero',desc:'Rise from F-Rank to S-Rank. Slash through dungeons, slay bosses, awaken.',p:'pink',t:'play',link:R+'com.hawks.rankzero',beta:true},
+        {name:'Online Compiler',desc:'Compile and run code from your mobile device.',p:'slate',t:'gh',link:'https://github.com/astrayhawk/Info/raw/main/Apks/Compiler.apk'},
+        {name:'Browser',desc:'A simple, lightweight browser.',p:'green',t:'gh',link:'https://github.com/astrayhawk/Info/raw/main/Apks/Browser.apk'}
     ];
 
     const WEB = [
-      { name:'Trinetra',             desc:'A curated collection of useful websites.',          icon:'🔱', p:'cyan',   link:'https://trinetra3.netlify.app/',                           bl:'Open Site' },
-      { name:'Eagle',                desc:'View my Documentation.',                            icon:'🔱', p:'pink',   link:'https://trinetra3.netlify.app/home/eagle',                 bl:'Open Site' },
-      { name:'Text Encryption Tool', desc:'Encrypt and decrypt text with a modern tool.',      icon:'🔐', p:'purple', link:'https://trinetra3.netlify.app/Pages/Encrypt.html',         bl:'Open Site' },
-      { name:'ProtoPing',            desc:"ProtoPing App Documentation",                       icon:'🌙', p:'pink',   link:'https://protoping.onrender.com/',                          bl:'Open Site' },
+        {name:'Trinetra',desc:'A curated collection of useful websites.',p:'cyan',t:'web',link:'https://trinetra3.netlify.app/'},
+        {name:'Eagle',desc:'Read my documentation.',p:'pink',t:'web',link:'https://trinetra3.netlify.app/home/eagle'},
+        {name:'Text Encryption Tool',desc:'Encrypt and decrypt text with a modern tool.',p:'purple',t:'web',link:'https://trinetra3.netlify.app/Pages/Encrypt.html'},
+        {name:'ProtoPing Docs',desc:'Documentation for the ProtoPing app.',p:'green',t:'web',link:'https://protoping.onrender.com/'}
     ];
 
     let activeTab = 'apps';
 
+    const esc = s => s.replace(/[&<>"]/g, c => ({
+        '&':'&amp;',
+        '<':'&lt;',
+        '>':'&gt;',
+        '"':'&quot;'
+    }[c]));
+
+    const initials = n => n.replace(/^\w+:\s*/, '')
+        .split(/\s+/).slice(0,2).map(w => w[0]).join('').toUpperCase();
+
     function card(d) {
-      const s = S[d.p];
-      return `
-      <div class="card">
-        <div class="card-top">
-          <div class="card-icon" style="background:${s.ib};color:${s.ic}">${d.icon}</div>
-          ${d.beta ? '<span class="beta">Beta</span>' : '<span></span>'}
-        </div>
-        <h3>${d.name}</h3>
-        <p>${d.desc}</p>
-        <a class="card-btn" href="${d.link}" target="_blank" rel="noopener noreferrer"
-          style="background:${s.bb};color:${s.bc};border:1px solid ${s.bbr}">
-          ${d.bl} ${EXT}
-        </a>
-      </div>`;
+        const pid = d.t === 'play'
+            ? new URL(d.link).searchParams.get('id')
+            : '';
+
+        // Automatically fetch Google Play app icon using package name
+        const src = pid
+            ? `https://avatarsapi.com/google-play/${pid}`
+            : '';
+
+        const img = src
+            ? `<img src="${src}" alt="${esc(d.name)} icon"
+                 loading="lazy" referrerpolicy="no-referrer"
+                 onerror="this.remove()">`
+            : '';
+
+        const [c1,c2] = GRAD[d.p].split(',');
+
+        return `<article class="card">
+            <div class="card-head">
+                <div class="icon" style="background:linear-gradient(135deg,${c1},${c2})">
+                    ${esc(initials(d.name))}
+                    ${img}
+                </div>
+                <div>
+                    <h3>${esc(d.name)}</h3>
+                    ${d.beta ? '<span class="beta">Beta</span>' : ''}
+                </div>
+            </div>
+
+            <p>${esc(d.desc)}</p>
+
+            <div class="card-foot">
+                <span class="src">${ICON[d.t]}${SRC[d.t]}</span>
+                <a class="get" href="${d.link}" target="_blank"
+                   rel="noopener noreferrer"
+                   aria-label="${ACTION[d.t]}: ${esc(d.name)}">
+                    ${ACTION[d.t]}
+                </a>
+            </div>
+        </article>`;
     }
 
-    function render(data, q) {
-      const list = q ? data.filter(d => (d.name + ' ' + d.desc).toLowerCase().includes(q)) : data;
-      document.getElementById('grid').innerHTML = list.length
-        ? list.map(card).join('')
-        : `<div class="empty">No results for "${q}"</div>`;
+    function render(data,q) {
+        const list = q
+            ? data.filter(d => (d.name+' '+d.desc).toLowerCase().includes(q))
+            : data;
+
+        document.getElementById('grid').innerHTML = list.length
+            ? list.map(card).join('')
+            : `<div class="empty">No results for “${esc(q)}”</div>`;
     }
 
     function switchTab(el) {
-      activeTab = el.dataset.tab;
-      document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
-      el.classList.add('active');
-      document.getElementById('q').value = '';
-      render(activeTab === 'apps' ? APPS : WEB, '');
+        activeTab = el.dataset.tab;
+
+        document.querySelectorAll('.tab').forEach(b => {
+            b.classList.remove('active');
+            b.setAttribute('aria-selected', b === el);
+        });
+
+        el.classList.add('active');
+        document.getElementById('q').value = '';
+
+        render(activeTab === 'apps' ? APPS : WEB, '');
     }
 
     function filter() {
-      render(activeTab === 'apps' ? APPS : WEB, document.getElementById('q').value.toLowerCase().trim());
+        render(
+            activeTab === 'apps' ? APPS : WEB,
+            document.getElementById('q').value.toLowerCase().trim()
+        );
     }
 
-    // Init counts
+    document.getElementById('hero-profile').innerHTML =
+        ICON.play + 'Play Store page';
+
+    document.getElementById('hero-all').innerHTML =
+        ICON.play + 'All apps on Play Store';
+
     document.getElementById('tc-apps').textContent = APPS.length;
     document.getElementById('tc-web').textContent = WEB.length;
-    document.getElementById('sn-apps').textContent = APPS.length;
+
     render(APPS, '');
 </script>
+
 </body>
 </html>
